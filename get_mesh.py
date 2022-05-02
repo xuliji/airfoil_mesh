@@ -37,6 +37,6 @@ for file in tqdm(file_list, desc="Generating mesh"):
     model.add_physical(circle.curve_loop.curves, "Obstacle")
 
     geometry.generate_mesh(dim=2)
-    gmsh.write('./Meshes/'+file[:-4]+'.msh')
+    gmsh.write('./Meshes/'+file[:-4]+'.su2')
     gmsh.clear()
     geometry.__exit__()
