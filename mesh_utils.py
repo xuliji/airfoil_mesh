@@ -17,7 +17,10 @@ def create_cfg(mesh_name):
             new_line = lines[i].replace('2032c.su2', mesh_name)
             lines[i] = new_line
         elif 'CONV_FILENAME= history' in lines[i]:
-            new_line = lines[i].replace('CONV_FILENAME= history', 'CONV_FILENAME= ' + 'history_' + mesh_name[:-4])
+            new_line = lines[i].replace('CONV_FILENAME= history', 'CONV_FILENAME= ' + mesh_name[:-4] + '_history')
+            lines[i] = new_line
+        elif 'VOLUME_FILENAME= flow' in lines[i]:
+            new_line = lines[i].replace('VOLUME_FILENAME= flow', 'VOLUME_FILENAME= ' + mesh_name[:-4] + 'flow')
             lines[i] = new_line
 
     f1.writelines(lines)
@@ -27,7 +30,7 @@ def create_cfg(mesh_name):
 # file_list = os.listdir("./Meshes")
 # np.savetxt("./Meshes/1.txt", file_list, fmt="%s")
 file_list = np.loadtxt("./Meshes/1.txt", dtype=str)
-for mesh_name in tqdm(file_list, desc='CL_CD'):
+for mesh_name in file_list:
     create_cfg(mesh_name)
-    child = subprocess.check_output('su2_cfd ' + mesh_name[:-4] + '.cfg', cwd='./Meshes', shell=True)
-    child.kill()
+    # child = subprocess.check_output('su2_cfd ' + mesh_name[:-4] + '.cfg', cwd='./Meshes', shell=True)
+    # print(str(child, encoding='gbk'))
