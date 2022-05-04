@@ -34,7 +34,7 @@ for file in tqdm(file_list, desc="Generating mesh"):
     model.add_physical([channel_lines[0]], "Inflow")
     model.add_physical([channel_lines[2]], "Outflow")
     model.add_physical([channel_lines[1], channel_lines[3]], "Walls")
-    model.add_physical(circle.curve_loop.curves, "Obstacle")
+    model.add_physical(circle.curve_loop.curves, "airfoil")
 
     geometry.generate_mesh(dim=2)
     gmsh.write('./Meshes/'+file[:-4]+'.su2')
